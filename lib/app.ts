@@ -6,7 +6,7 @@ import { authMiddleware } from "./http/middleware/auth";
 import { PrismaClient } from '@prisma/client';
 
 class App {
-    private readonly port = 4500;
+    private readonly port = 4501;
     private app = express();
 
     constructor() {

@@ -1,5 +1,6 @@
 import { Request, Response, Express } from "express";
 import { prisma }  from "../app";
+import { json } from "stream/consumers";
 
 export class Routes {
 
@@ -7,6 +8,10 @@ export class Routes {
 
         app.route('/').get((req: Request, res: Response) => {
             res.json({result: "success"})
+        })
+
+        app.route('/bonjour').get((req: Request, res: Response) => {
+            res.json({'content': 'Hello world !'});
         })
 
         app.route('/test').get(async (req: Request, res: Response) => {
@@ -17,6 +22,8 @@ export class Routes {
                   },
             });
             return res.json(user);
-        })
+        });
+
+      
     }
 }

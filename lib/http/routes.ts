@@ -1,5 +1,5 @@
 import { Request, Response, Express } from "express";
-import  { api, prisma }  from "../app";
+import { prisma }  from "../app";
 
 export class Routes {
 

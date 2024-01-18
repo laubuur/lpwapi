@@ -25,6 +25,7 @@ model EventType {
 
 model Event {
   id Int @id @default(autoincrement())
+  title String
   description String
   address String
   date DateTime

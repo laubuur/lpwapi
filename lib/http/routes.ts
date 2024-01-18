@@ -1,62 +1,44 @@
 import { Request, Response, Express } from "express";
-import { prisma }  from "../app";
-import { json } from "stream/consumers";
 import { EventTypeController } from "../controllers/eventType";
+import { EventController } from "../controllers/event";
 
 export class Routes {
+
+    private static eventTypeController = new EventTypeController();
+    private static eventController = new EventController();
 
     public static buildRoutes(app: Express) {
 
         app.route('/').get((req: Request, res: Response) => {
             res.json({result: "success"})
-        })
-
-        app.route('/bonjour').get((req: Request, res: Response) => {
-            res.json({'content': 'Hello world, vous voyez c\'est pas si compliqué.'});
-        })
-
-        app.route('/bonjour').post((req: Request, res:Response) => {
-            const body = req.body.prenom;
-            res.json({'content': 'Ha salut ! Tu t\'appelles '+body});
-        })
-
-        app.route('/test').get(async (req: Request, res: Response) => {
-            try {
-                const user = await prisma.user.create({
-                    data: {
-                        name: 'Alice',
-                        email: 'alice@prisma.iosdsd',
-                      },
-                });
-                return res.json(user);
-            }
-            catch (e) {
-                return res.json({"error": e});
-            }
-            
-        });
-
-        app.route('/george').post((req: Request, res: Response) => {
-            console.log(req.query);
-            let password = req.body.password;
-            let login = req.body.login;
-            console.log(password + ' - ' + login);
-            return res.json({});
         });
 
         app.route('/eventType').post((req: Request, res: Response) => {
-            const controller = new EventTypeController();
-            controller.create(req, res);
+            this.eventTypeController.create(req, res);
         });
 
         app.route('/eventType').get((req: Request, res: Response) => {
-            const controller = new EventTypeController();
-            controller.list(req, res);
-        })
+            this.eventTypeController.list(req, res);
+        });
 
         app.route('/eventType/:id').delete((req: Request, res: Response) => {
-            const controller = new EventTypeController();
-            controller.remove(req, res);
+            this.eventTypeController.remove(req, res);
+        });
+
+        app.route('/event').post((req: Request, res: Response) => {
+            this.eventController.create(req, res);
+        });
+
+        app.route('/event').get((req: Request, res: Response) => {
+            this.eventController.list(req, res);
+        });
+
+        app.route('/event/:id').get((req: Request, res: Response) => {
+            this.eventController.read(req, res);
+        });
+
+        app.route('/event/:id').post((req: Request, res: Response) => {
+            this.eventController.update(req, res);
         })
 
     }

@@ -1,19 +1,18 @@
 import { Request, Response } from "express";
 import { prisma } from "../app";
-import { json } from "stream/consumers";
 
 export class EventTypeController {
     
     async create(req: Request, res: Response) {
 
-        if (!(req.body.eventType && req.body.eventType.length > 0)) {
+        if (!(req.body.data && req.body.data.length > 0)) {
             return res.json({status: 'error', data: 'Veuillez encoder un eventType valide'});
         }
 
         try {
             const type = await prisma.eventType.create({
                 data: {
-                    name: req.body.eventType
+                    name: req.body.data
                 }
             });
             return res.json({status: 'success', data: type});
@@ -25,6 +24,7 @@ export class EventTypeController {
 
     async list(req: Request, res: Response) {
         const types = await prisma.eventType.findMany({});
+
         return res.json({data: types});
     }
 

@@ -17,3 +17,5 @@ Pour executer une migration:
 
 Vous pouvez changer le "init" en un autre nom pour nommer votre migration
 
+# Lancement de la gui DB
+*npx prisma studio*

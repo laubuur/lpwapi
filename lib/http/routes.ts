@@ -1,11 +1,13 @@
 import { Request, Response, Express } from "express";
 import { EventTypeController } from "../controllers/eventType";
 import { EventController } from "../controllers/event";
+import { UserController } from "../controllers/user";
 
 export class Routes {
 
     private static eventTypeController = new EventTypeController();
     private static eventController = new EventController();
+    private static userController = new UserController();
 
     public static buildRoutes(app: Express) {
 
@@ -39,7 +41,14 @@ export class Routes {
 
         app.route('/event/:id').post((req: Request, res: Response) => {
             this.eventController.update(req, res);
+        });
+
+        app.route('/subscribe').post((req: Request, res: Response) => {
+            this.userController.create(req, res);
         })
 
+        app.route('/login').post((req: Request, res: Response) => {
+            this.userController.login(req, res);
+        })
     }
 }

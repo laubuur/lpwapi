@@ -20,7 +20,7 @@ class App {
         // this.app.use(bodyParser.json({ limit: "250mb"}));
         //support application/x-www-form-urlencoded post data
         this.app.use(express.urlencoded({ extended: true, limit: "250mb" }));
-      //  this.app.use(authMiddleware);
+        this.app.use(authMiddleware);
         Routes.buildRoutes(this.app);
     }
 

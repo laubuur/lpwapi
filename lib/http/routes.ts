@@ -50,5 +50,9 @@ export class Routes {
         app.route('/login').post((req: Request, res: Response) => {
             this.userController.login(req, res);
         })
+
+        app.route('/userlist').get((req: Request, res: Response) => {
+            this.userController.list(req, res)
+        });
     }
 }

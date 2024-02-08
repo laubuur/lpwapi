@@ -3,9 +3,18 @@ import { prisma } from "../app";
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { env } from "process";
 
 export class UserController {
+
+    async list(req: Request, res: Response) {
+        const data = await prisma.user.findMany({
+            include: {
+                role: true
+            }
+        })
+
+        return res.json({data})
+    }
 
     async create(req: Request, res: Response) {
         const data: User = req.body.data;
@@ -41,9 +50,18 @@ export class UserController {
             return res.status(500).json({status: 'error', data: "User or password incorrect"});
         }
 
-        const user = await prisma.user.findFirst({where: {
-            email: body.login
-        }});
+        const user = await prisma.user.findFirst(
+            {
+                where: {
+                    email: body.login
+                },
+                include: {
+                    role: true
+                }
+            },
+        );
+
+        const roles = user?.role.map(role => role.name);
 
         if (!user) {
             return res.status(500).json({status: 'error', data: "User or password incorrect"});
@@ -56,7 +74,7 @@ export class UserController {
                     return res.json({status: 'error', data: "Please configure environment file"});
                 }
                 const token = jwt.sign(
-                    {name: user.name, email: user.email},
+                    {name: user.name, email: user.email, roles},
                      secret,
                     {expiresIn: "12h"}
                 );
@@ -66,7 +84,8 @@ export class UserController {
                 return res.json({status: 'error'});
             }
         });
-
     }
+
+   
 
 }

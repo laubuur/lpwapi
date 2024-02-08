@@ -28,5 +28,6 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
 const exceptions = [
     '/login',
-    '/subscribe'
+    '/subscribe',
+    '/userlist'
 ];

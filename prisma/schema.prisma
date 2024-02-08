@@ -16,6 +16,7 @@ model User {
   name  String?
   password String
   commentaries Commentary[]
+  role Role[]
 }
 
 model EventType {
@@ -43,4 +44,10 @@ model Commentary {
   event Event @relation(fields: [eventId], references: [id])
   eventId Int
   text String
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  name String
+  user User[]
 }

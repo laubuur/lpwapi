@@ -87,15 +87,15 @@ export class EventController{
             errors.push('Aucun evenement lié')
         }
 
-        if (!(data.title && data.description.length > 2)) {
+        if (!(data.title && data.description.length > 0)) {
             errors.push('Veuillez mettre un titre') 
         }
 
-        if (!(data.description && data.description.length > 10)) {
+        if (!(data.description && data.description.length >= 5)) {
             errors.push('Veuillez mettre une description') 
         }
 
-        if (!(data.address && data.address.length > 5)) {
+        if (!(data.address && data.address.length > 0)) {
             errors.push('Veuillez mettre une adresse')
         }
 
@@ -103,7 +103,7 @@ export class EventController{
             errors.push('Veuillez mettre une date')
         }
 
-        if (!(data.price && data.price > 0)) {
+        if (!(data.price && data.price >= 10)) {
             errors.push('Veuillez mettre un prix valide')
         }
 
